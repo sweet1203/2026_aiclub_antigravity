@@ -116,4 +116,77 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         });
     }
+
+    // AI Chat Interface Logic
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatBox = document.getElementById('chat-box');
+    
+    // Message History for Claude API (Keep context)
+    let messageHistory = [];
+
+    const appendMessage = (text, sender) => {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `chat-message ${sender}-message glass`;
+        msgDiv.innerHTML = text.replace(/\n/g, '<br>');
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    };
+
+    const sendMessage = async () => {
+        const text = chatInput.value.trim();
+        if(!text) return;
+        
+        // Add user message to UI
+        appendMessage(text, 'user');
+        chatInput.value = '';
+        
+        // Add user message to history
+        messageHistory.push({ role: 'user', content: text });
+        
+        // Loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'typing-indicator';
+        loadingDiv.innerText = '안티그래비티가 생각 중... 🤔';
+        chatBox.appendChild(loadingDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ messages: messageHistory })
+            });
+            
+            chatBox.removeChild(loadingDiv);
+            
+            if(!response.ok) {
+                appendMessage('앗! 지금은 멘토가 자리에 없어요. 잠시 후 다시 시도해주세요 😅 (API 키 설정이 필요합니다)', 'ai');
+                return;
+            }
+            
+            const data = await response.json();
+            const aiReply = data.reply;
+            
+            // Add AI message to UI
+            appendMessage(aiReply, 'ai');
+            
+            // Add AI message to history
+            messageHistory.push({ role: 'assistant', content: aiReply });
+            
+        } catch (error) {
+            if(chatBox.contains(loadingDiv)) chatBox.removeChild(loadingDiv);
+            appendMessage('네트워크 오류가 발생했습니다 🔌', 'ai');
+            console.error(error);
+        }
+    };
+
+    if(sendBtn && chatInput) {
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') sendMessage();
+        });
+    }
 });
