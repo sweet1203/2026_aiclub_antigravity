@@ -20,6 +20,11 @@ export default async function handler(req, res) {
 5. 무조건 긍정적이고 지지하는 태도를 보이세요!
 `;
 
+  const modelName =
+    process.env.ANTHROPIC_MODEL ||
+    process.env.CLAUDE_MODEL ||
+    'claude-3-5-haiku-latest';
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -29,7 +34,7 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-haiku-20241022', // 가장 저렴하고 빠른 모델
+        model: modelName,
         max_tokens: 500,
         system: systemPrompt,
         messages: messages
