@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프롬프트 치트시트 📖 | 바이브코딩✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+</head>
+<body class="page-body">
+    <nav class="navbar glass page-nav">
+        <div class="logo">✨ VibeCoding</div>
+        <ul class="nav-links">
+            <li><a href="index.html">홈</a></li>
+            <li><a href="ideation.html">기획소</a></li>
+            <li><a href="gallery.html">앱 갤러리</a></li>
+            <li><a href="prompt-guide.html" class="active">프롬프트</a></li>
+            <li><a href="faq.html">오류 해결</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header section-header fade-in">
+        <span class="badge">Secret Cheat Sheet</span>
+        <h2>마법의 주문 사전 📖</h2>
+        <p>AI에게 어떻게 말해야 할지 모르겠다면? 아래 문장들을 참고해서 나만의 프롬프트를 만들어보세요.<br>상황별로 필요한 주문들을 팍팍 모아봤어요! 🪄</p>
+    </header>
+
+    <section class="section pt-0 prompt-guide-section">
+        
+        <!-- Category 1: Design -->
+        <div class="guide-category fade-in">
+            <h3 class="category-title">🎨 1. 예쁘게 꾸며줘 (디자인/스타일)</h3>
+            <p class="category-desc">색상, 폰트, 애니메이션 등 시각적인 요소들을 바꿀 때 쓰는 주문이에요.</p>
+            <div class="prompt-list">
+                <div class="prompt-item glass">
+                    <p class="desc">전체적인 색감을 바꾸고 싶을 때</p>
+                    <div class="code-box">
+                        <code>전체 배경색을 연한 파스텔 핑크(#FFE4E1)로 바꾸고 모든 카드 모서리를 동글동글하게 만들어줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">버튼에 애니메이션을 주고 싶을 때</p>
+                    <div class="code-box">
+                        <code>버튼에 마우스를 올렸을 때(hover) 버튼이 살짝 위로 붕~ 떠오르는 부드러운 애니메이션을 CSS로 넣어줄래?</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">유리 재질(글래스모피즘) 느낌을 원할 때</p>
+                    <div class="code-box">
+                        <code>뒷배경이 살짝 비치는 투명한 '글래스모피즘(Glassmorphism)' 효과를 박스에 적용해서 요즘 유행하는 모던한 느낌을 줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">글씨체(폰트) 느낌을 바꿀 때</p>
+                    <div class="code-box">
+                        <code>기본 글꼴 말고, 몽글몽글하고 귀여운 느낌의 무료 구글 폰트를 연동해서 적용시켜줘!</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 2: Logic -->
+        <div class="guide-category fade-in delay-1">
+            <h3 class="category-title">⚙️ 2. 똑똑하게 만들어줘 (기능/로직)</h3>
+            <p class="category-desc">버튼을 눌렀을 때 무슨 이벤트가 일어날지, 데이터를 저장할지 결정하는 주문이에요.</p>
+            <div class="prompt-list">
+                <div class="prompt-item glass">
+                    <p class="desc">입력창에서 엔터를 눌렀을 때 추가되게 하기</p>
+                    <div class="code-box">
+                        <code>사용자가 텍스트 입력창에 글을 쓰고 '엔터키'를 치더라도 버튼을 누른 것과 똑같이 목록에 내용이 추가되도록 자바스크립트를 짜줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">데이터 삭제 및 줄긋기 기능</p>
+                    <div class="code-box">
+                        <code>추가된 할 일 목록 옆에 '완료' 버튼과 '삭제' 버튼을 만들어줘. 완료를 누르면 회색으로 변하며 취소선이 그어지고, 삭제를 누르면 아예 사라지게 해줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">새로고침해도 내용 안 날아가게 (저장 기능)</p>
+                    <div class="code-box">
+                        <code>내가 적어둔 데이터들이 인터넷 브라우저에 임시 저장되게 해줘. 브라우저를 껐다 켜도 내용이 남아있게 Local Storage를 사용해서 구현해줘!</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">오디오 추가하기</p>
+                    <div class="code-box">
+                        <code>타이머가 0초가 되면 경쾌하고 귀여운 알림 소리가 '띠링~' 하고 울리도록 오디오 재생 기능을 넣어줄래? 소리 파일은 무료 링크를 써줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 3: Layout & Responsive -->
+        <div class="guide-category fade-in delay-2">
+            <h3 class="category-title">📐 3. 위치를 잡아줘 (레이아웃/반응형)</h3>
+            <p class="category-desc">화면의 구도, 스마트폰 화면 크기에 맞추는 마법의 주문!</p>
+            <div class="prompt-list">
+                <div class="prompt-item glass">
+                    <p class="desc">화면을 양옆으로 나눌 때 (Flex/Grid)</p>
+                    <div class="code-box">
+                        <code>화면을 딱 반으로 나눠서, 왼쪽 절반에는 이미지가 꽉 차게 들어가고 오른쪽 절반에는 로그인 폼이 나타나게 레이아웃을 잡아줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">항상 화면 정중앙에 놓고 싶을 때</p>
+                    <div class="code-box">
+                        <code>브라우저 크기를 어떻게 줄이든 상관없이, 이 하얀색 박스가 화면의 정중앙 테두리에 딱 맞게 오도록 CSS Flexbox를 써서 정렬해줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass">
+                    <p class="desc">스마트폰에서도 예쁘게 보이고 싶을 때</p>
+                    <div class="code-box">
+                        <code>이 웹사이트가 모바일 폰에서도 예쁘게 보여야 해. 창 너비가 768px 이하로 좁아지면, 가로로 나열되던 요소들이 세로로 한 줄씩 나오게 반응형(미디어 쿼리)으로 고쳐줘!</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category 4: The Vibe Magic -->
+        <div class="guide-category fade-in">
+            <h3 class="category-title">✨ 4. 알잘딱깔센 마법! (대충 말해도 찰떡같이)</h3>
+            <p class="category-desc">코딩 용어를 하나도 몰라도 AI의 센스(Vibe)에 맡기는 궁극의 프롬프트!</p>
+            <div class="prompt-list">
+                <div class="prompt-item glass highlight-item">
+                    <p class="desc">분위기만 던져주기 🎨</p>
+                    <div class="code-box">
+                        <code>디자인이 너무 딱딱해. 요즘 인스타 핫플 카페처럼 화이트&우드톤으로 아늑하고 따뜻한 느낌이 나게 알아서 싹 리뉴얼해줘. 여백도 좀 시원하게 줘!</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass highlight-item">
+                    <p class="desc">화려함 추가하기 🎆</p>
+                    <div class="code-box">
+                        <code>뭔가 허전한데... 사이트에 들어오면 눈이 내리거나 입자가 떠다니는 것 같은 예쁜 파티클 애니메이션을 배경에 은은하게 깔아줄 수 있을까?</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+                <div class="prompt-item glass highlight-item">
+                    <p class="desc">버튼 눌러보기 귀찮을 때 🎮</p>
+                    <div class="code-box">
+                        <code>내가 만든 데이터들을 확인해보고 싶은데 지금 화면이 텅 비어있어. 테스트용 가짜 데이터(더미 데이터)를 예쁜 내용으로 5개 정도 꽉꽉 채워넣어줘.</code>
+                        <button class="copy-btn">복사</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer page-footer">
+        <div class="club-info">
+            <h3>🏫 대성여자고등학교 앱개발코딩탐구반</h3>
+            <p>지도교사: 구정화 선생님</p>
+        </div>
+        <p class="copyright">© 2026 대성여고 앱개발코딩탐구반. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

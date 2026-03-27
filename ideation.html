@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아이디어 기획소 💡 | 바이브코딩✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pages.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+</head>
+<body class="page-body">
+    <nav class="navbar glass page-nav">
+        <div class="logo">✨ VibeCoding</div>
+        <ul class="nav-links">
+            <li><a href="index.html">홈</a></li>
+            <li><a href="ideation.html" class="active">기획소</a></li>
+            <li><a href="gallery.html">앱 갤러리</a></li>
+            <li><a href="prompt-guide.html">프롬프트</a></li>
+            <li><a href="faq.html">오류 해결</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header section-header fade-in">
+        <span class="badge">Ideation Lab</span>
+        <h2>어떤 앱을 만들까요? 💡</h2>
+        <p>프롬프트를 쓰기 전, 내 일상에서 재미있는 아이디어를 찾아봐요!</p>
+    </header>
+
+    <section class="section pt-0">
+        <!-- 3-Step Guide -->
+        <div class="cards-grid fade-in">
+            <div class="card glass">
+                <div class="icon">🔍</div>
+                <h3>1. 불편함 찾기</h3>
+                <p>내가 어제 하루 동안 "아 이거 진짜 불편해!" 했던 순간을 떠올려보세요.<br><span class="highlight">(예: 매번 급식표 검색하기 귀찮아)</span></p>
+            </div>
+            <div class="card glass delay-1">
+                <div class="icon">✂️</div>
+                <h3>2. 딱 3가지만!</h3>
+                <p>너무 복잡하면 AI도 헷갈려요. 꼭 필요한 핵심 기능 딱 3가지만 적어보세요.<br><span class="highlight">(예: 날싸 보여주기, 점심 메뉴, 저녁 메뉴)</span></p>
+            </div>
+            <div class="card glass delay-2">
+                <div class="icon">📝</div>
+                <h3>3. 스케치하기</h3>
+                <p>종이와 펜을 꺼내서 스마트폰 네모를 그리고 대충 버튼 위치를 그려보세요.<br><span class="highlight">이 그림을 보면서 프롬프트를 쓰면 훨씬 쉬워요!</span></p>
+            </div>
+        </div>
+
+        <!-- Random Idea Generator (The Machine) -->
+        <div class="machine-container glass fade-in" style="margin-top: 60px; text-align: center; padding: 40px;">
+            <h3>도저히 생각이 안 난다면? 🎰</h3>
+            <p style="margin-bottom: 20px;">자판기 버튼을 눌러서 재밌는 아이디어를 랜덤으로 뽑아보세요!</p>
+            <div id="idea-display" class="idea-box glass">
+                <p class="idea-text" id="idea-text">여기에 예쁜 아이디어가 두둥등장! ✨</p>
+            </div>
+            <button id="generate-btn" class="btn primary-btn mt-30">아이디어 뽑기 🎲</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer page-footer">
+        <div class="club-info">
+            <h3>🏫 대성여자고등학교 앱개발코딩탐구반</h3>
+            <p>지도교사: 구정화 선생님</p>
+        </div>
+        <p class="copyright">© 2026 대성여고 앱개발코딩탐구반. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
