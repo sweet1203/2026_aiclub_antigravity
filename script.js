@@ -163,7 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
             chatBox.removeChild(loadingDiv);
             
             if(!response.ok) {
-                appendMessage('앗! 지금은 멘토가 자리에 없어요. 잠시 후 다시 시도해주세요 😅 (API 키 설정이 필요합니다)', 'ai');
+                let errText = await response.text();
+                appendMessage(`앗! 에러가 발생했어요. 😅\n\n[디버그 정보]\n상태 코드: ${response.status}\n오류 내용: ${errText}\n\n*주의: 바탕화면 등 내 컴퓨터에서 직접 파일로(file://) 열었다면 채팅이 작동하지 않습니다. 반드시 배포된 Vercel 웹사이트(https://...vercel.app)로 접속해 주세요!`, 'ai');
                 return;
             }
             
@@ -178,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             if(chatBox.contains(loadingDiv)) chatBox.removeChild(loadingDiv);
-            appendMessage('네트워크 오류가 발생했습니다 🔌', 'ai');
+            appendMessage('네트워크 오류가 발생했습니다 🔌\n(인터넷 연결을 확인하시거나, 로컬 파일 대신 Vercel 주소로 접속해 주세요!)', 'ai');
             console.error(error);
         }
     };
