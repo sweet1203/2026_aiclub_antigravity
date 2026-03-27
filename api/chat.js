@@ -20,17 +20,25 @@ export default async function handler(req, res) {
 5. 무조건 긍정적이고 지지하는 태도를 보이세요!
 `;
 
+  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({
+      error: 'Server misconfiguration',
+      detail: 'ANTHROPIC_API_KEY (또는 CLAUDE_API_KEY)가 Vercel 환경변수에 없습니다.'
+    });
+  }
+
   const modelName =
     process.env.ANTHROPIC_MODEL ||
     process.env.CLAUDE_MODEL ||
-    'claude-3-5-haiku-latest';
+    'claude-haiku-4-5';
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY || process.env.CLAUDE_API_KEY,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
@@ -42,15 +50,44 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Anthropic API Error:", errorData);
-        return res.status(500).json({ error: 'Failed to communicate with Claude API' });
+      const rawText = await response.text();
+      let errorData;
+      try {
+        errorData = JSON.parse(rawText);
+      } catch {
+        errorData = { raw: rawText };
+      }
+      console.error('Anthropic API Error:', errorData);
+      const msg =
+        errorData?.error?.message ||
+        errorData?.message ||
+        JSON.stringify(errorData);
+      return res.status(502).json({
+        error: 'Claude API 요청 실패',
+        detail: msg,
+        model: modelName
+      });
     }
 
     const data = await response.json();
-    return res.status(200).json({ reply: data.content[0].text });
+    const block = data.content?.[0];
+    const text =
+      block?.type === 'text' && typeof block.text === 'string'
+        ? block.text
+        : null;
+    if (!text) {
+      console.error('Unexpected Claude response shape:', data);
+      return res.status(502).json({
+        error: 'Unexpected API response',
+        detail: '응답에 텍스트 블록이 없습니다.'
+      });
+    }
+    return res.status(200).json({ reply: text });
   } catch (error) {
-    console.error("Server Error:", error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Server Error:', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+      detail: error instanceof Error ? error.message : String(error)
+    });
   }
 }
