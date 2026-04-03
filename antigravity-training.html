@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>안티그래비티(Antigravity) 훈련소 | 바이브코딩✨</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+            background-color: #fafaf9;
+            color: #292524;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            min-height: 350px;
+            max-height: 450px;
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav-active {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+            font-weight: 600;
+            border-left: 4px solid #4f46e5;
+        }
+        .nav-inactive {
+            color: #57534e;
+            border-left: 4px solid transparent;
+        }
+        .nav-inactive:hover {
+            background-color: #f5f5f4;
+            color: #1c1917;
+        }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+
+    <header class="flex-shrink-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur-sm shadow-sm">
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-3 md:px-6">
+            <a href="index.html" class="text-lg font-bold tracking-tight text-stone-800">✨ VibeCoding</a>
+            <nav class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 text-sm font-medium text-stone-600">
+                <a href="index.html" class="hover:text-indigo-600">홈</a>
+                <a href="ideation.html" class="hover:text-indigo-600">기획소</a>
+                <a href="gallery.html" class="hover:text-indigo-600">앱 갤러리</a>
+                <a href="prompt-guide.html" class="hover:text-indigo-600">프롬프트</a>
+                <a href="antigravity-training.html" class="font-semibold text-indigo-600">훈련소</a>
+                <a href="faq.html" class="hover:text-indigo-600">오류 해결</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="flex min-h-0 flex-1 flex-col md:flex-row">
+<!-- Chosen Palette: Warm Neutrals (Stone) with Indigo/Purple Accents -->
+<!-- Application Structure Plan: Dashboard-style SPA with a persistent sidebar for non-linear exploration. It transforms a static markdown document into an interactive training hub. Users can jump between learning modules (Intro, Prompting, Workflow, Deployment) based on their current phase in the hackathon/project. -->
+<!-- Visualization & Content Choices: 1. Core Interfaces -> Goal: Inform -> Interactive info cards -> HTML/CSS. 2. RTDS Framework -> Goal: Compare -> Interactive Before/After Prompt toggle -> Vanilla JS. 3. Tiki-Taka Workflow -> Goal: Process -> Clickable timeline steps -> HTML/CSS/JS. 4. Deployment Comparison -> Goal: Compare -> Radar Chart -> Chart.js. NO SVG/Mermaid used. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <nav class="w-full md:w-64 bg-white border-r border-stone-200 flex-shrink-0 flex flex-col z-20 shadow-sm md:min-h-0">
+        <div class="p-6 border-b border-stone-100 flex items-center gap-3">
+            <span class="text-2xl">🚀</span>
+            <div>
+                <h1 class="text-xl font-bold text-stone-800 tracking-tight">Antigravity</h1>
+                <p class="text-xs text-stone-500">IT 동아리 Vibe 코딩 특강</p>
+            </div>
+        </div>
+        <div class="flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto md:flex-1 py-4 px-2 md:px-0 gap-1" id="nav-menu">
+            <button type="button" data-target="sec-intro" class="nav-btn nav-active w-full text-left px-6 py-3 transition-colors duration-200 whitespace-nowrap md:whitespace-normal flex items-center gap-3">
+                <span class="text-lg">🎯</span> 1. 안티그래비티란?
+            </button>
+            <button type="button" data-target="sec-prompt" class="nav-btn nav-inactive w-full text-left px-6 py-3 transition-colors duration-200 whitespace-nowrap md:whitespace-normal flex items-center gap-3">
+                <span class="text-lg">🧙‍♂️</span> 2. 마법의 프롬프트
+            </button>
+            <button type="button" data-target="sec-workflow" class="nav-btn nav-inactive w-full text-left px-6 py-3 transition-colors duration-200 whitespace-nowrap md:whitespace-normal flex items-center gap-3">
+                <span class="text-lg">🛠️</span> 3. 실전 티키타카
+            </button>
+            <button type="button" data-target="sec-deploy" class="nav-btn nav-inactive w-full text-left px-6 py-3 transition-colors duration-200 whitespace-nowrap md:whitespace-normal flex items-center gap-3">
+                <span class="text-lg">🌍</span> 4. 웹앱 배포하기
+            </button>
+        </div>
+        <div class="mt-auto p-6 hidden md:block">
+            <div class="bg-indigo-50 rounded-xl p-4 border border-indigo-100">
+                <p class="text-sm text-indigo-800 font-medium leading-relaxed">
+                    "코드를 외우는 것이 아니라, 상상하고 논리적으로 설명하는 시대입니다."
+                </p>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 min-h-0 overflow-y-auto p-4 md:p-10 relative">
+        <div id="sec-intro" class="content-section fade-in max-w-5xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">구글 안티그래비티(Antigravity) 시작하기</h2>
+                <p class="text-lg text-stone-600 leading-relaxed bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                    이 섹션에서는 안티그래비티가 무엇인지, 기존 코드 에디터와 어떻게 다른지 알아봅니다.
+                    안티그래비티는 타자기가 아닌 여러분의 **전속 수석 개발자**입니다. 복잡한 문법을 몰라도, 아이디어만 있다면 AI 에이전트가 코드를 기획하고 작성해 줍니다. 아래 3가지 핵심 인터페이스를 클릭하여 각 역할을 확인해 보세요.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetail('detail-agent')">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">💬</div>
+                    <h3 class="text-xl font-bold mb-2">에이전트 매니저</h3>
+                    <p class="text-stone-500 text-sm">AI에게 명령을 내리고 소통하는 채팅창. 단축키 Ctrl+E</p>
+                    <div id="detail-agent" class="hidden mt-4 pt-4 border-t border-stone-100 text-sm text-indigo-700 bg-indigo-50 p-3 rounded-lg">
+                        이곳에서 "웹앱 만들어줘"와 같은 프롬프트를 입력합니다. 에러가 났을 때 로그를 붙여넣고 해결을 요청할 수도 있습니다.
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetail('detail-editor')">
+                    <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">💻</div>
+                    <h3 class="text-xl font-bold mb-2">코드 에디터</h3>
+                    <p class="text-stone-500 text-sm">AI가 작성한 코드가 실시간으로 찍히는 캔버스 공간.</p>
+                    <div id="detail-editor" class="hidden mt-4 pt-4 border-t border-stone-100 text-sm text-emerald-700 bg-emerald-50 p-3 rounded-lg">
+                        작성된 코드를 직접 눈으로 확인하고, 필요하다면 일반 에디터처럼 직접 코드를 타이핑하여 수정할 수도 있습니다.
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 hover:shadow-md transition-shadow cursor-pointer group" onclick="toggleDetail('detail-artifacts')">
+                    <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🎨</div>
+                    <h3 class="text-xl font-bold mb-2">아티팩트</h3>
+                    <p class="text-stone-500 text-sm">AI의 작업 결과물, 시안, 미리보기를 직관적으로 확인.</p>
+                    <div id="detail-artifacts" class="hidden mt-4 pt-4 border-t border-stone-100 text-sm text-amber-700 bg-amber-50 p-3 rounded-lg">
+                        복잡한 텍스트 로그 대신, 완성된 화면의 렌더링 결과나 디자인 시안을 바로 보여주어 빠른 피드백이 가능합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec-prompt" class="content-section hidden max-w-5xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">마법의 프롬프트 가이드 (RTDS)</h2>
+                <p class="text-lg text-stone-600 leading-relaxed bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                    안티그래비티의 핵심은 코딩 실력이 아닌 '대화의 기술'입니다. 이 섹션에서는 AI에게 지시를 내리는 완벽한 4단계 공식인 <strong>RTDS</strong>를 배우고, 나쁜 프롬프트가 좋은 프롬프트로 어떻게 변화하는지 직접 인터랙션하며 비교해 볼 수 있습니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-stone-800 text-white p-4 rounded-xl text-center shadow-lg">
+                    <div class="text-3xl mb-1">R</div>
+                    <div class="font-bold">Role</div>
+                    <div class="text-xs text-stone-400 mt-1">역할 부여</div>
+                </div>
+                <div class="bg-indigo-600 text-white p-4 rounded-xl text-center shadow-lg">
+                    <div class="text-3xl mb-1">T</div>
+                    <div class="font-bold">Task</div>
+                    <div class="text-xs text-indigo-200 mt-1">핵심 임무</div>
+                </div>
+                <div class="bg-emerald-600 text-white p-4 rounded-xl text-center shadow-lg">
+                    <div class="text-3xl mb-1">D</div>
+                    <div class="font-bold">Details</div>
+                    <div class="text-xs text-emerald-200 mt-1">상세 조건</div>
+                </div>
+                <div class="bg-amber-500 text-white p-4 rounded-xl text-center shadow-lg">
+                    <div class="text-3xl mb-1">S</div>
+                    <div class="font-bold">Stack</div>
+                    <div class="text-xs text-amber-100 mt-1">기술 스택</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+                <div class="bg-stone-100 border-b border-stone-200 p-4 flex justify-between items-center">
+                    <h3 class="font-bold text-stone-800">실전 연습: 동아리 아이디어 게시판</h3>
+                    <div class="flex gap-2 bg-stone-200 p-1 rounded-lg">
+                        <button type="button" id="btn-bad-prompt" class="px-4 py-1.5 rounded-md text-sm font-bold bg-white text-rose-600 shadow-sm">❌ 나쁜 프롬프트</button>
+                        <button type="button" id="btn-good-prompt" class="px-4 py-1.5 rounded-md text-sm font-bold text-stone-500 hover:text-stone-800">🟢 좋은 프롬프트</button>
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 min-h-[250px] flex flex-col justify-center bg-stone-50">
+                    <div id="prompt-display-bad" class="text-xl text-stone-600 italic">
+                        "동아리 애들이 쓸 게시판 하나 만들어줘. 예쁘게 해줘."
+                        <div class="mt-6 text-sm text-rose-500 bg-rose-50 p-3 rounded-lg border border-rose-100 inline-block">
+                            결과: AI가 의도를 파악하지 못하고 촌스러운 기본 스타일의 게시판을 만들 확률 99%
+                        </div>
+                    </div>
+                    <div id="prompt-display-good" class="hidden">
+                        <p class="text-lg text-stone-800 leading-relaxed">
+                            <span class="bg-stone-800 text-white px-2 py-0.5 rounded text-sm mr-2">Role</span>너는 10년 차 트렌디한 프론트엔드 수석 개발자야.<br><br>
+                            <span class="bg-indigo-600 text-white px-2 py-0.5 rounded text-sm mr-2">Task</span>우리 IT 동아리원들이 아이디어를 자유롭게 올릴 수 있는 '아이디어 공유 웹앱'을 만들어줘.<br><br>
+                            <span class="bg-amber-500 text-white px-2 py-0.5 rounded text-sm mr-2">Stack</span>React와 Tailwind CSS를 사용해서 단일 페이지(SPA)로 구성해 줘.<br><br>
+                            <span class="bg-emerald-600 text-white px-2 py-0.5 rounded text-sm mr-2">Details</span>
+                            1. 디자인: 다크 모드 테마, 주요 버튼은 네온 퍼플(#b026ff) 포인트, 애플 웹사이트처럼 여백이 많게.<br>
+                            2. 기능: 상단 큰 제목, 텍스트 박스와 등록 버튼, 카드 형태의 아이디어 나열.<br>
+                            3. 인터랙션: 등록 버튼 클릭 시 부드러운 애니메이션 효과.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec-workflow" class="content-section hidden max-w-5xl mx-auto">
+            <div class="mb-8">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">실전 티키타카 워크플로우</h2>
+                <p class="text-lg text-stone-600 leading-relaxed bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                    첫 프롬프트를 작성했다면, 이제 AI와 소통하며 앱을 완성해 나가는 과정입니다. 이 섹션은 앱 개발의 3단계 순환 과정을 보여줍니다. 각 단계를 클릭하여 구체적인 행동 강령과 디버깅 대처법을 확인하세요.
+                </p>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <div class="workflow-step bg-white p-6 rounded-2xl shadow-sm border-2 border-transparent hover:border-indigo-300 cursor-pointer transition-all" onclick="highlightStep(this, 'step1-content')">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center font-bold text-stone-500">1</div>
+                        <h3 class="text-xl font-bold">첫 초안 확인하기</h3>
+                    </div>
+                    <div id="step1-content" class="hidden mt-4 pl-14 text-stone-600">
+                        AI가 코드를 작성한 후 '아티팩트(Artifacts)' 창에 결과물을 띄워줍니다. 미리보기 화면을 꼼꼼히 살펴보고 마음에 드는 부분과 수정이 필요한 부분을 찾습니다.
+                    </div>
+                </div>
+
+                <div class="w-1 bg-stone-200 h-6 ml-11"></div>
+
+                <div class="workflow-step bg-white p-6 rounded-2xl shadow-sm border-2 border-transparent hover:border-indigo-300 cursor-pointer transition-all" onclick="highlightStep(this, 'step2-content')">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-600">2</div>
+                        <h3 class="text-xl font-bold">수정 요청하기 (Iterative Prompting)</h3>
+                    </div>
+                    <div id="step2-content" class="hidden mt-4 pl-14 text-stone-600 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                        코드를 직접 고칠 필요가 없습니다. 말로 지시하세요.<br><br>
+                        <ul class="list-disc ml-4 space-y-2 text-sm text-indigo-900">
+                            <li>"아이디어 카드 모서리가 너무 각져 있어. 둥글게(border-radius) 처리해 줘."</li>
+                            <li>"모바일 화면 크기로 줄였을 때 글씨가 너무 커서 깨져. 반응형으로 수정해 줘."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="w-1 bg-stone-200 h-6 ml-11"></div>
+
+                <div class="workflow-step bg-white p-6 rounded-2xl shadow-sm border-2 border-transparent hover:border-rose-300 cursor-pointer transition-all" onclick="highlightStep(this, 'step3-content')">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center font-bold text-rose-600">3</div>
+                        <h3 class="text-xl font-bold">에러(Error) 대처법</h3>
+                    </div>
+                    <div id="step3-content" class="hidden mt-4 pl-14 text-stone-600 bg-rose-50 p-4 rounded-xl border border-rose-100">
+                        빨간색 에러 창이 떠도 당황하지 마세요!<br><br>
+                        <strong>해결법:</strong> 에러 메시지를 복사해서 에이전트 매니저에 붙여넣습니다.<br>
+                        <span class="text-sm font-mono bg-white px-2 py-1 rounded text-rose-600 mt-2 inline-block shadow-sm">"터미널에 Module not found 에러가 나. 원인을 찾아서 고쳐줘."</span><br>
+                        그러면 AI가 스스로 패키지를 설치하거나 코드를 수정하여 디버깅을 완료합니다.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec-deploy" class="content-section hidden max-w-5xl mx-auto w-full">
+            <div class="mb-8 w-full">
+                <h2 class="text-3xl font-extrabold text-stone-900 mb-4">웹앱 배포 플랫폼 비교</h2>
+                <p class="text-lg text-stone-600 leading-relaxed bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                    로컬에서 완성된 동아리 웹앱을 친구들과 공유하기 위한 무료 배포 플랫폼을 비교합니다.
+                    프로젝트의 성격(React 기반, 정적 사이트, DB 필요 여부)에 따라 가장 적합한 플랫폼을 선택할 수 있도록 주요 지표를 시각화했습니다. AI에게 <strong>"Vercel에 배포하게 세팅해줘"</strong>라고 말하면 모든 준비를 알아서 해줍니다.
+                </p>
+            </div>
+
+            <div class="bg-white p-4 md:p-8 rounded-2xl shadow-sm border border-stone-200 w-full flex flex-col xl:flex-row gap-8 items-center">
+                <div class="flex-1 w-full flex flex-col justify-center items-center">
+                    <div class="chart-container">
+                        <canvas id="deployChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-4 w-full">
+                    <div class="p-4 border-l-4 border-[#b026ff] bg-stone-50 rounded-r-xl cursor-pointer hover:bg-stone-100 transition-colors" onclick="highlightChart(0)">
+                        <h4 class="font-bold text-lg flex items-center justify-between">Vercel (버셀) <span class="text-xs bg-[#b026ff] text-white px-2 py-1 rounded">강력 추천</span></h4>
+                        <p class="text-sm text-stone-600 mt-1">React, Next.js 등 최신 프론트엔드 프레임워크에 최적화. 깃허브 연동 자동 배포.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-[#2ea44f] bg-stone-50 rounded-r-xl cursor-pointer hover:bg-stone-100 transition-colors" onclick="highlightChart(1)">
+                        <h4 class="font-bold text-lg">GitHub Pages</h4>
+                        <p class="text-sm text-stone-600 mt-1">가장 근본적이고 직관적인 방법. HTML/CSS/JS 중심의 가벼운 정적 웹사이트에 적합.</p>
+                    </div>
+                    <div class="p-4 border-l-4 border-[#ffca28] bg-stone-50 rounded-r-xl cursor-pointer hover:bg-stone-100 transition-colors" onclick="highlightChart(2)">
+                        <h4 class="font-bold text-lg">Firebase Hosting</h4>
+                        <p class="text-sm text-stone-600 mt-1">구글 서비스. 향후 로그인이나 데이터베이스(DB) 저장이 필요한 앱 확장에 매우 유리.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+    <script>
+        const navBtns = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.content-section');
+        let deployChartInstance = null;
+        const defaultDatasetStyles = [
+            { borderWidth: 2, backgroundColor: 'rgba(176, 38, 255, 0.2)', borderColor: '#b026ff' },
+            { borderWidth: 2, backgroundColor: 'rgba(46, 164, 79, 0.2)', borderColor: '#2ea44f' },
+            { borderWidth: 2, backgroundColor: 'rgba(255, 202, 40, 0.2)', borderColor: '#ffca28' }
+        ];
+
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+
+                navBtns.forEach(b => {
+                    b.classList.remove('nav-active');
+                    b.classList.add('nav-inactive');
+                });
+
+                btn.classList.remove('nav-inactive');
+                btn.classList.add('nav-active');
+
+                sections.forEach(sec => {
+                    if(sec.id === targetId) {
+                        sec.classList.remove('hidden');
+                        sec.classList.add('fade-in');
+                        if (targetId === 'sec-deploy' && !deployChartInstance) {
+                            initDeployChart();
+                        }
+                    } else {
+                        sec.classList.add('hidden');
+                        sec.classList.remove('fade-in');
+                    }
+                });
+            });
+        });
+
+        function toggleDetail(id) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                el.classList.add('fade-in');
+            } else {
+                el.classList.add('hidden');
+                el.classList.remove('fade-in');
+            }
+        }
+
+        const btnBad = document.getElementById('btn-bad-prompt');
+        const btnGood = document.getElementById('btn-good-prompt');
+        const displayBad = document.getElementById('prompt-display-bad');
+        const displayGood = document.getElementById('prompt-display-good');
+
+        btnBad.addEventListener('click', () => {
+            btnBad.classList.replace('text-stone-500', 'text-rose-600');
+            btnBad.classList.add('bg-white', 'shadow-sm');
+            btnGood.classList.replace('text-emerald-600', 'text-stone-500');
+            btnGood.classList.remove('bg-white', 'shadow-sm');
+
+            displayBad.classList.remove('hidden');
+            displayGood.classList.add('hidden');
+        });
+
+        btnGood.addEventListener('click', () => {
+            btnGood.classList.replace('text-stone-500', 'text-emerald-600');
+            btnGood.classList.add('bg-white', 'shadow-sm');
+            btnBad.classList.replace('text-rose-600', 'text-stone-500');
+            btnBad.classList.remove('bg-white', 'shadow-sm');
+
+            displayBad.classList.add('hidden');
+            displayGood.classList.remove('hidden');
+            displayGood.classList.add('fade-in');
+        });
+
+        function highlightStep(element, contentId) {
+            document.querySelectorAll('.workflow-step').forEach(el => {
+                el.classList.remove('ring-2', 'ring-offset-2', 'ring-indigo-400', 'bg-stone-50');
+            });
+            element.classList.add('ring-2', 'ring-offset-2', 'ring-indigo-400', 'bg-stone-50');
+
+            const contents = [document.getElementById('step1-content'), document.getElementById('step2-content'), document.getElementById('step3-content')];
+            contents.forEach(c => c.classList.add('hidden'));
+
+            const targetContent = document.getElementById(contentId);
+            targetContent.classList.remove('hidden');
+            targetContent.classList.add('fade-in');
+        }
+
+        function initDeployChart() {
+            const ctx = document.getElementById('deployChart').getContext('2d');
+
+            const data = {
+                labels: ['프론트엔드 최적화', '세팅 직관성', '동적 기능(DB/Auth)', '배포 자동화 속도'],
+                datasets: [
+                    {
+                        label: 'Vercel',
+                        data: [10, 8, 5, 10],
+                        fill: true,
+                        backgroundColor: 'rgba(176, 38, 255, 0.2)',
+                        borderColor: '#b026ff',
+                        pointBackgroundColor: '#b026ff',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#b026ff'
+                    },
+                    {
+                        label: 'GitHub Pages',
+                        data: [6, 10, 2, 7],
+                        fill: true,
+                        backgroundColor: 'rgba(46, 164, 79, 0.2)',
+                        borderColor: '#2ea44f',
+                        pointBackgroundColor: '#2ea44f',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#2ea44f'
+                    },
+                    {
+                        label: 'Firebase',
+                        data: [7, 6, 10, 8],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 202, 40, 0.2)',
+                        borderColor: '#ffca28',
+                        pointBackgroundColor: '#ffca28',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#ffca28'
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'radar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Pretendard', sans-serif"
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.r + '점';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 10,
+                            ticks: {
+                                stepSize: 2,
+                                display: false
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: "'Pretendard', sans-serif",
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            deployChartInstance = new Chart(ctx, config);
+        }
+
+        function applyDatasetStyle(ds, style) {
+            ds.borderWidth = style.borderWidth;
+            ds.backgroundColor = style.backgroundColor;
+            ds.borderColor = style.borderColor;
+        }
+
+        function highlightChart(datasetIndex) {
+            if(!deployChartInstance) return;
+            const dsList = deployChartInstance.data.datasets;
+            dsList.forEach((ds, i) => {
+                if(i === datasetIndex) {
+                    applyDatasetStyle(ds, {
+                        borderWidth: 4,
+                        backgroundColor: defaultDatasetStyles[i].backgroundColor.replace('0.2', '0.5'),
+                        borderColor: defaultDatasetStyles[i].borderColor
+                    });
+                } else {
+                    applyDatasetStyle(ds, {
+                        borderWidth: 1,
+                        backgroundColor: defaultDatasetStyles[i].backgroundColor.replace('0.2', '0.1'),
+                        borderColor: defaultDatasetStyles[i].borderColor
+                    });
+                }
+            });
+            deployChartInstance.update();
+
+            setTimeout(() => {
+                dsList.forEach((ds, i) => {
+                    applyDatasetStyle(ds, defaultDatasetStyles[i]);
+                });
+                deployChartInstance.update();
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
